@@ -1,0 +1,37 @@
+Ran 16 tests for test/Gas.UnitTests.t.sol:GasTest
+[PASS] testAddHistory() (gas: 233)
+[PASS] testAddToWhitelist(address,uint256) (runs: 256, μ: 47726, ~: 47693)
+[PASS] testBalanceOf() (gas: 12313)
+[PASS] testCheckForAdmin() (gas: 19660)
+[PASS] testGetPaymentHistory() (gas: 212)
+[PASS] testGetPaymentStatus(address) (runs: 256, μ: 344, ~: 344)
+[PASS] testGetTradingMode() (gas: 210)
+[PASS] testTransfer(uint256,address) (runs: 256, μ: 237854, ~: 241429)
+[PASS] testWhiteTranferAmountUpdate(address,address,uint256,string,uint256) (runs: 256, μ: 422709, ~: 422580)
+[PASS] test_admins() (gas: 36302)
+[PASS] test_onlyOwner(address,uint256) (runs: 256, μ: 49295, ~: 49296)
+[PASS] test_tiers(address,uint256) (runs: 256, μ: 79804, ~: 79552)
+[PASS] test_tiersReverts(address,uint256) (runs: 256, μ: 47434, ~: 47467)
+[PASS] test_whitelistEvents(address,address,uint256,string,uint256) (runs: 256, μ: 409996, ~: 413535)
+[PASS] test_whitelistEvents(address,uint256) (runs: 256, μ: 82388, ~: 81845)
+[PASS] test_whitelistTransfer(address,address,uint256,string,uint256) (runs: 256, μ: 409898, ~: 413583)
+Suite result: ok. 16 passed; 0 failed; 0 skipped; finished in 252.01ms (783.62ms CPU time)
+| src/Gas.sol:GasContract contract |                 |        |        |        |         |
+|----------------------------------|-----------------|--------|--------|--------|---------|
+| Deployment Cost                  | Deployment Size |        |        |        |         |
+| 2790345                          | 12630           |        |        |        |         |
+| Function Name                    | min             | avg    | median | max    | # calls |
+| addToWhitelist                   | 35241           | 66731  | 85230  | 85321  | 8       |
+| administrators                   | 2547            | 2547   | 2547   | 2547   | 5       |
+| balanceOf                        | 660             | 2160   | 2660   | 2660   | 8       |
+| balances                         | 598             | 1098   | 598    | 2598   | 4       |
+| checkForAdmin                    | 12027           | 12027  | 12027  | 12027  | 1       |
+| getPaymentStatus                 | 807             | 807    | 807    | 807    | 1       |
+| transfer                         | 218350          | 218494 | 218494 | 218638 | 4       |
+| whiteTransfer                    | 105261          | 105373 | 105429 | 105429 | 3       |
+| whitelist                        | 642             | 642    | 642    | 642    | 2       |
+
+
+
+
+Ran 1 test suite in 254.67ms (252.01ms CPU time): 16 tests passed, 0 failed, 0 skipped (16 total tests)
