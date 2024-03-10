@@ -123,7 +123,7 @@ contract GasContract is Ownable, Constants {
 
     function getPaymentHistory()
         public
-        payable
+        view
         returns (History[] memory)
     {
         return paymentHistory;
