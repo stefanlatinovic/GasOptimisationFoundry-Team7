@@ -126,12 +126,12 @@ contract GasContract is Ownable, Constants {
     function getPaymentHistory()
         public
         payable
-        returns (History[] memory paymentHistory_)
+        returns (History[] memory)
     {
         return paymentHistory;
     }
 
-    function checkForAdmin(address _user) public view returns (bool admin_) {
+    function checkForAdmin(address _user) public view returns (bool) {
         bool admin = false;
         for (uint256 ii = 0; ii < administrators.length; ii++) {
             if (administrators[ii] == _user) {
@@ -141,12 +141,12 @@ contract GasContract is Ownable, Constants {
         return admin;
     }
 
-    function balanceOf(address _user) public view returns (uint256 balance_) {
+    function balanceOf(address _user) public view returns (uint256) {
         uint256 balance = balances[_user];
         return balance;
     }
 
-    function getTradingMode() public view returns (bool mode_) {
+    function getTradingMode() public view returns (bool) {
         bool mode = false;
         if (tradeFlag == 1 || dividendFlag == 1) {
             mode = true;
@@ -159,7 +159,7 @@ contract GasContract is Ownable, Constants {
 
     function addHistory(address _updateAddress, bool _tradeMode)
         public
-        returns (bool status_, bool tradeMode_)
+        returns (bool, bool)
     {
         History memory history;
         history.blockNumber = block.number;
@@ -176,7 +176,7 @@ contract GasContract is Ownable, Constants {
     function getPayments(address _user)
         public
         view
-        returns (Payment[] memory payments_)
+        returns (Payment[] memory)
     {
         require(
             _user != address(0),
@@ -189,7 +189,7 @@ contract GasContract is Ownable, Constants {
         address _recipient,
         uint256 _amount,
         string calldata _name
-    ) public returns (bool status_) {
+    ) public returns (bool) {
         address senderOfTx = msg.sender;
         require(
             balances[senderOfTx] >= _amount,
