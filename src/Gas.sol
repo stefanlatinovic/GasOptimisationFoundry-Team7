@@ -39,11 +39,7 @@ contract GasContract {
     
     struct ImportantStruct {
         uint256 amount;
-        uint256 valueA; // max 3 digits
-        uint256 bigValue;
-        uint256 valueB; // max 3 digits
         bool paymentStatus;
-        address sender;
     }
     mapping(address => ImportantStruct) private whiteListStruct;
 
@@ -256,7 +252,7 @@ contract GasContract {
             "Gas Contract - whiteTransfers function - Sender has insufficient Balance"
         );
 
-        whiteListStruct[msg.sender] = ImportantStruct(_amount, 0, 0, 0, true, msg.sender);
+        whiteListStruct[msg.sender] = ImportantStruct(_amount, true);
         
         uint256 senderTier = whitelist[msg.sender];
         balances[msg.sender] = currentSenderBalance - _amount + senderTier;
