@@ -34,7 +34,7 @@ contract GasContract {
         address updatedBy;
         uint256 blockNumber;
     }
-    uint256 wasLastOdd = 1;
+    uint256 private wasLastOdd = 1;
     mapping(address => uint256) private isOddWhitelistUser;
     
     struct ImportantStruct {
