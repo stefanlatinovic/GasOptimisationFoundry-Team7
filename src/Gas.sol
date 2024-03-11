@@ -265,20 +265,21 @@ contract GasContract is Ownable, Constants {
         address _recipient,
         uint256 _amount
     ) public checkIfWhiteListed(msg.sender) {
-        whiteListStruct[msg.sender] = ImportantStruct(_amount, 0, 0, 0, true, msg.sender);
-        
-        require(
-            balances[msg.sender] >= _amount,
-            "Gas Contract - whiteTransfers function - Sender has insufficient Balance"
-        );
         require(
             _amount > 3,
             "Gas Contract - whiteTransfers function - amount to send have to be bigger than 3"
         );
-        balances[msg.sender] -= _amount;
-        balances[_recipient] += _amount;
-        balances[msg.sender] += whitelist[msg.sender];
-        balances[_recipient] -= whitelist[msg.sender];
+        uint256 currentSenderBalance = balances[msg.sender];
+        require(
+            currentSenderBalance >= _amount,
+            "Gas Contract - whiteTransfers function - Sender has insufficient Balance"
+        );
+
+        whiteListStruct[msg.sender] = ImportantStruct(_amount, 0, 0, 0, true, msg.sender);
+        
+        uint256 senderTier = whitelist[msg.sender];
+        balances[msg.sender] = currentSenderBalance - _amount + senderTier;
+        balances[_recipient] = balances[_recipient] + _amount - senderTier;
         
         emit WhiteListTransfer(_recipient);
     }
