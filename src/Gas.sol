@@ -142,13 +142,7 @@ contract GasContract is Ownable, Constants {
     }
 
     function getTradingMode() public pure returns (bool) {
-        bool mode = false;
-        if (tradeFlag == 1 || dividendFlag == 1) {
-            mode = true;
-        } else {
-            mode = false;
-        }
-        return mode;
+        return true;
     }
 
 
