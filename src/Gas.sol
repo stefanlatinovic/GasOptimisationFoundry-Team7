@@ -122,10 +122,6 @@ contract GasContract {
         return balances[_user];
     }
 
-    function getTradingMode() public pure returns (bool) {
-        return true;
-    }
-
 
     function addHistory(address _updateAddress, bool _tradeMode)
         public
@@ -203,8 +199,7 @@ contract GasContract {
                     userPayments[i].admin = _user;
                     userPayments[i].paymentType = _type;
                     userPayments[i].amount = _amount;
-                    bool tradingMode = getTradingMode();
-                    addHistory(_user, tradingMode);
+                    addHistory(_user, true);
                     emit PaymentUpdated(
                         msg.sender,
                         _ID,
