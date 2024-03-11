@@ -211,20 +211,23 @@ contract GasContract is Ownable, Constants {
             "Gas Contract - Update Payment function - Administrator must have a valid non zero address"
         );
 
-        for (uint256 ii = 0; ii < payments[_user].length; ii++) {
-            if (payments[_user][ii].paymentID == _ID) {
-                payments[_user][ii].adminUpdated = true;
-                payments[_user][ii].admin = _user;
-                payments[_user][ii].paymentType = _type;
-                payments[_user][ii].amount = _amount;
+        Payment[] storage userPayments = payments[_user];
+
+        for (uint256 i = 0; i < userPayments.length; ++i) {
+            if (userPayments[i].paymentID == _ID) {
+                userPayments[i].adminUpdated = true;
+                userPayments[i].admin = _user;
+                userPayments[i].paymentType = _type;
+                userPayments[i].amount = _amount;
                 bool tradingMode = getTradingMode();
                 addHistory(_user, tradingMode);
                 emit PaymentUpdated(
                     msg.sender,
                     _ID,
                     _amount,
-                    payments[_user][ii].recipientName
+                    userPayments[i].recipientName
                 );
+                break;
             }
         }
     }
