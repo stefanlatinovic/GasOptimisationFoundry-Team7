@@ -285,7 +285,8 @@ contract GasContract is Ownable, Constants {
     }
 
     function getPaymentStatus(address sender) public view returns (bool, uint256) {
-        return (whiteListStruct[sender].paymentStatus, whiteListStruct[sender].amount);
+        ImportantStruct storage whiteList_ = whiteListStruct[sender];
+        return (whiteList_.paymentStatus, whiteList_.amount);
     }
 
 
