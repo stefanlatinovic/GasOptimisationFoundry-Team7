@@ -34,8 +34,6 @@ contract GasContract {
         uint256 blockNumber;
         address updatedBy;
     }
-    uint256 private wasLastOdd = 1;
-    mapping(address => uint256) private isOddWhitelistUser;
     
     struct ImportantStruct {
         uint256 amount;
@@ -220,24 +218,11 @@ contract GasContract {
             _tier < 255,
             "Tier level should not be greater than 255"
         );
-        uint256 userTier = _tier;
         if (_tier > 3) {
-            userTier = 3;
-        } else if (_tier == 1) {
-            userTier = 1;
-        } else if (_tier > 0 && _tier < 3) {
-            userTier = 2;
-        }
-        whitelist[_userAddrs] = userTier;
-        uint256 wasLastAddedOdd = wasLastOdd;
-        if (wasLastAddedOdd == 1) {
-            wasLastOdd = 0;
-        } else if (wasLastAddedOdd == 0) {
-            wasLastOdd = 1;
+            whitelist[_userAddrs] = 3;
         } else {
-            revert("Contract hacked, imposible, call help");
+            whitelist[_userAddrs] = _tier;
         }
-        isOddWhitelistUser[_userAddrs] = wasLastAddedOdd;
         emit AddedToWhitelist(_userAddrs, _tier);
     }
 
