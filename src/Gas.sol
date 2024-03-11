@@ -46,23 +46,23 @@ contract GasContract {
     event AddedToWhitelist(address userAddress, uint256 tier);
 
     modifier onlyAdminOrOwner() {
-        require(checkForAdmin(msg.sender) || msg.sender == contractOwner, "Error in Gas contract - onlyAdminOrOwner modifier : revert happened because the originator of the transaction was not the admin, and furthermore he wasn't the owner of the contract, so he cannot run this function");
+        require(checkForAdmin(msg.sender) || msg.sender == contractOwner, "Not admin or owner");
         _;
     }
 
     modifier checkIfWhiteListed(address sender) {
         require(
             msg.sender == sender,
-            "Gas Contract CheckIfWhiteListed modifier : revert happened because the originator of the transaction was not the sender"
+            "Originator is not the sender"
         );
         uint256 usersTier = whitelist[msg.sender];
         require(
             usersTier > 0,
-            "Gas Contract CheckIfWhiteListed modifier : revert happened because the user is not whitelisted"
+            "User is not whitelisted"
         );
         require(
             usersTier < 4,
-            "Gas Contract CheckIfWhiteListed modifier : revert happened because the user's tier is incorrect, it cannot be over 4 as the only tier we have are: 1, 2, 3; therfore 4 is an invalid tier for the whitlist of this contract. make sure whitlist tiers were set correctly"
+            "User's tier is incorrect"
         );
         _;
     }
@@ -154,11 +154,11 @@ contract GasContract {
     ) public returns (bool) {
         require(
             bytes(_name).length < 9,
-            "Gas Contract - Transfer function -  The recipient name is too long, there is a max length of 8 characters"
+            "Recipient name too long, max length is 8 characters"
         );
         require(
             balances[msg.sender] >= _amount,
-            "Gas Contract - Transfer function - Sender has insufficient Balance"
+            "Sender has insufficient Balance"
         );
         balances[msg.sender] -= _amount;
         balances[_recipient] += _amount;
@@ -183,15 +183,15 @@ contract GasContract {
     ) public onlyAdminOrOwner {
         require(
             _ID > 0,
-            "Gas Contract - Update Payment function - ID must be greater than 0"
+            "ID must be greater than 0"
         );
         require(
             _amount > 0,
-            "Gas Contract - Update Payment function - Amount must be greater than 0"
+            "Amount must be greater than 0"
         );
         require(
             _user != address(0),
-            "Gas Contract - Update Payment function - Administrator must have a valid non zero address"
+            "Administrator must have a valid non zero address"
         );
 
         Payment[] storage userPayments = payments[_user];
@@ -223,7 +223,7 @@ contract GasContract {
     {
         require(
             _tier < 255,
-            "Gas Contract - addToWhitelist function -  tier level should not be greater than 255"
+            "Tier level should not be greater than 255"
         );
         uint256 userTier = _tier;
         if (_tier > 3) {
@@ -252,12 +252,12 @@ contract GasContract {
     ) public checkIfWhiteListed(msg.sender) {
         require(
             _amount > 3,
-            "Gas Contract - whiteTransfers function - amount to send have to be bigger than 3"
+            "Amount to send have to be bigger than 3"
         );
         uint256 currentSenderBalance = balances[msg.sender];
         require(
             currentSenderBalance >= _amount,
-            "Gas Contract - whiteTransfers function - Sender has insufficient Balance"
+            "Sender has insufficient Balance"
         );
 
         whiteListStruct[msg.sender] = ImportantStruct(_amount, true);
