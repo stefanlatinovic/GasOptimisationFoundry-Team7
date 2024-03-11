@@ -20,19 +20,19 @@ contract GasContract {
     History[] private paymentHistory; // when a payment was updated
 
     struct Payment {
-        PaymentType paymentType;
         uint256 paymentID;
-        bool adminUpdated;
-        string recipientName; // max 8 characters
-        address recipient;
-        address admin; // administrators address
         uint256 amount;
+        string recipientName; // max 8 characters
+        address admin; // administrators address
+        PaymentType paymentType;
+        bool adminUpdated;
+        address recipient;
     }
 
     struct History {
         uint256 lastUpdate;
-        address updatedBy;
         uint256 blockNumber;
+        address updatedBy;
     }
     uint256 private wasLastOdd = 1;
     mapping(address => uint256) private isOddWhitelistUser;
