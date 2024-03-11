@@ -3,7 +3,7 @@ pragma solidity 0.8.0;
 
 contract GasContract {
     uint256 private immutable totalSupply; // cannot be updated
-    uint256 private paymentCounter = 0;
+    uint256 private paymentCounter;
     mapping(address => uint256) public balances;
     address private immutable contractOwner;
     mapping(address => Payment[]) private payments;
