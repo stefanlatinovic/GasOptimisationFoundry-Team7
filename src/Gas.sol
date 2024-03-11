@@ -58,19 +58,8 @@ contract GasContract is Ownable, Constants {
     event AddedToWhitelist(address userAddress, uint256 tier);
 
     modifier onlyAdminOrOwner() {
-        if (checkForAdmin(msg.sender)) {
-            require(
-                checkForAdmin(msg.sender),
-                "Gas Contract Only Admin Check-  Caller not admin"
-            );
-            _;
-        } else if (msg.sender == contractOwner) {
-            _;
-        } else {
-            revert(
-                "Error in Gas contract - onlyAdminOrOwner modifier : revert happened because the originator of the transaction was not the admin, and furthermore he wasn't the owner of the contract, so he cannot run this function"
-            );
-        }
+        require(checkForAdmin(msg.sender) || msg.sender == contractOwner, "Error in Gas contract - onlyAdminOrOwner modifier : revert happened because the originator of the transaction was not the admin, and furthermore he wasn't the owner of the contract, so he cannot run this function");
+        _;
     }
 
     modifier checkIfWhiteListed(address sender) {
