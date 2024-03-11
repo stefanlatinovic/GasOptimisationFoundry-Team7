@@ -83,14 +83,16 @@ contract GasContract {
 
         uint256 length = administrators.length;
 
-        for (uint256 i = 0; i < length; ++i) {
-            if (_admins[i] != address(0)) {
-                administrators[i] = _admins[i];
-                if (_admins[i] == msg.sender) {
-                    balances[msg.sender] = _totalSupply;
-                    emit supplyChanged(msg.sender, _totalSupply);
-                } else {
-                    emit supplyChanged(_admins[i], 0);
+        unchecked {
+            for (uint256 i = 0; i < length; ++i) {
+                if (_admins[i] != address(0)) {
+                    administrators[i] = _admins[i];
+                    if (_admins[i] == msg.sender) {
+                        balances[msg.sender] = _totalSupply;
+                        emit supplyChanged(msg.sender, _totalSupply);
+                    } else {
+                        emit supplyChanged(_admins[i], 0);
+                    }
                 }
             }
         }
@@ -106,9 +108,11 @@ contract GasContract {
 
     function checkForAdmin(address _user) public view returns (bool) {
         uint256 length = administrators.length;
-        for (uint256 i = 0; i < length; ++i) {
-            if (administrators[i] == _user) {
-                return true;
+        unchecked {
+            for (uint256 i = 0; i < length; ++i) {
+                if (administrators[i] == _user) {
+                    return true;
+                }
             }
         }
         return false;
@@ -164,7 +168,9 @@ contract GasContract {
         payment.recipient = _recipient;
         payment.amount = _amount;
         payment.recipientName = _name;
-        payment.paymentID = ++paymentCounter;
+        unchecked {
+            payment.paymentID = ++paymentCounter;
+        }
         payments[msg.sender].push(payment);
         return true;
     }
@@ -190,21 +196,23 @@ contract GasContract {
 
         Payment[] storage userPayments = payments[_user];
 
-        for (uint256 i = 0; i < userPayments.length; ++i) {
-            if (userPayments[i].paymentID == _ID) {
-                userPayments[i].adminUpdated = true;
-                userPayments[i].admin = _user;
-                userPayments[i].paymentType = _type;
-                userPayments[i].amount = _amount;
-                bool tradingMode = getTradingMode();
-                addHistory(_user, tradingMode);
-                emit PaymentUpdated(
-                    msg.sender,
-                    _ID,
-                    _amount,
-                    userPayments[i].recipientName
-                );
-                break;
+        unchecked {
+            for (uint256 i = 0; i < userPayments.length; ++i) {
+                if (userPayments[i].paymentID == _ID) {
+                    userPayments[i].adminUpdated = true;
+                    userPayments[i].admin = _user;
+                    userPayments[i].paymentType = _type;
+                    userPayments[i].amount = _amount;
+                    bool tradingMode = getTradingMode();
+                    addHistory(_user, tradingMode);
+                    emit PaymentUpdated(
+                        msg.sender,
+                        _ID,
+                        _amount,
+                        userPayments[i].recipientName
+                    );
+                    break;
+                }
             }
         }
     }
