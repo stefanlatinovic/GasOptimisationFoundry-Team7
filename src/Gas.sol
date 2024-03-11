@@ -5,7 +5,6 @@ contract GasContract {
     uint256 private immutable totalSupply; // cannot be updated
     uint256 private paymentCounter = 0;
     mapping(address => uint256) public balances;
-    uint256 private constant tradePercent = 12;
     address private immutable contractOwner;
     mapping(address => Payment[]) private payments;
     mapping(address => uint256) public whitelist;
