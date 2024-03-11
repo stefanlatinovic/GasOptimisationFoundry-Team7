@@ -11,10 +11,7 @@ contract GasContract {
     address[5] public administrators;
     enum PaymentType {
         Unknown,
-        BasicPayment,
-        Refund,
-        Dividend,
-        GroupPayment
+        BasicPayment
     }
 
     History[] private paymentHistory; // when a payment was updated
