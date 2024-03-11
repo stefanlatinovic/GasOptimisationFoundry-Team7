@@ -58,10 +58,7 @@ contract GasContract {
             usersTier > 0,
             "User is not whitelisted"
         );
-        require(
-            usersTier < 4,
-            "User's tier is incorrect"
-        );
+        assert(usersTier < 4);
         _;
     }
 
